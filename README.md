@@ -35,7 +35,7 @@ Now, the csv files from the previous step are converted to more specific files. 
 
 ##### How to execute
 
-- switch to the directory ```/RAW_TO_STREAMS/JS`````` in a terminal: ```cd RAW_TO_STREAMS/JS``` (assuming the terminal is opened in the base directory)
+- switch to the directory ```/RAW_TO_STREAMS/JS``` in a terminal: ```cd RAW_TO_STREAMS/JS``` (assuming the terminal is opened in the base directory)
 - install dependencies using ```npm install```
 - Now run the main script main.js using node.js: ```node main```
 - the output data is stored in ```/RAW_TO_STREAMS/streams```
