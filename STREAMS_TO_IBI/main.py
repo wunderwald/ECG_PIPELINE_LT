@@ -2,9 +2,8 @@ from processIBIs import processIBIs
 import os
 import accessQualityRatings as qr
 
-# if USE_RATINGS == False, ALL input files will be processed
-USE_RATINGS = False
 CREATE_FIGURES = True
+USE_RATINGS = False
 
 samplingRateDefault = 500
 samplingRateLabchart = 1000
