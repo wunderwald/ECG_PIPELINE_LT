@@ -1,6 +1,6 @@
 # Data processing pipeline for ECG data from the LT task
 
-by Moritz Wunderwald, 2023
+by [Moritz Wunderwald](mailto://code@moritzwunderwald.de), 2023
 
 ## About
 
