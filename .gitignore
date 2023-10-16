@@ -1,0 +1,11 @@
+*.xdf
+*.csv
+*.adicht
+*.json
+*/node_modules/*
+*.DS_STORE
+*.txt
+*.pyc
+*.png
+*.tsv
+*.xlsx
