@@ -1,3 +1,10 @@
+/* 
+TODO
+
+About
+
+*/
+
 import * as fs from 'fs';
 
 // i/0
@@ -45,6 +52,22 @@ const getDyadId = f => {
     const match = f.match(/_(\d{2})_/);
     return match ? match[1].replaceAll('_', '') : null;
 };
+
+// make or clear output dir
+const rmdirRecursive = dir => {
+    fs.readdirSync(dir).forEach(o => {
+        const path = `${dir}/${o}`;
+        const isFile = fs.lstatSync(path).isFile();
+        if(isFile){
+            fs.rmSync(path);
+            return;
+        }
+        rmdirRecursive(path);
+    });
+    fs.rmdirSync(dir);
+};
+if(fs.existsSync(OUTPUT_DIR)) rmdirRecursive(OUTPUT_DIR);
+fs.mkdirSync(OUTPUT_DIR);
 
 // read files & parse filenames
 const _inputFiles = fs.readdirSync(INPUT_DIR)
@@ -107,13 +130,14 @@ const dyads = ecg1Files.map(ecg1File => {
 }).filter(o => o);
 
 // extract IBI data for each dyad
-let i=0;
 dyads.forEach(dyad => {
-    if(i++ > 0) return;
 
     // process dyad
     const dyadId = dyad.ecg1.dyadId;
-    console.log(`# Processing dyad ${dyadId}...`);
+    const experimentId = dyad.ecg1.experiment;
+    const groupId = dyad.ecg1.group;
+    const channel = dyad.ecg1.channel;
+    console.log(`# Processing dyad ${dyadId} of group ${groupId} [experiment ID: ${experimentId}, channel ID: ${channel}] ...`);
 
     // read data
     const pathEcg1 = dyad.ecg1.path;
@@ -138,19 +162,18 @@ dyads.forEach(dyad => {
     const tsIbiEcg1 = makeIbiTimeSeries(ibiEcg1).map(o => ({...o, ecg: 'ecg1'}));
     const tsIbiEcg2 = makeIbiTimeSeries(ibiEcg2).map(o => ({...o, ecg: 'ecg2'}));
 
-    // make combined timeseries
+    // merge bth time series
     const tsIbiCombined = [...tsIbiEcg1, ...tsIbiEcg2].sort((a, b) => a.t - b.t);
 
     // make csv content
-    const head = "t_ms, ibi_ms, ecg";
+    const head = "t_ms, ibi_ms, ecg_id";
     const body = tsIbiCombined.reduce((txt, sample) => `${txt}${sample.t}, ${sample.ibi}, ${sample.ecg}\n`, "");
     const csv = `${head}\n${body}`;
-    console.log(csv);
 
-    // make filename (experiment, group, channel)...
-    // TODO
+    // make filename
+    const filename = `${experimentId}_${groupId}_${dyadId}_${channel}.csv`;
+    const outputPath = `${OUTPUT_DIR}/${filename}`;
 
     // write csv to file
-    // TODO
-
+    fs.writeFileSync(outputPath, csv);
 });
