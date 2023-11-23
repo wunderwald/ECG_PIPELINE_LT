@@ -85,3 +85,23 @@ _inputFiles.forEach(inputFile => {
 })
 
 // make dyads
+const ecg1Files = inputFiles.filter(inputFile => inputFile.ecgLabel === 'ecg1');
+const getEcg2File = ecg1File => inputFiles.find(f => f.ecgLabel === 'ecg2'
+    && ecg1File.dyadId === f.dyadId
+    && ecg1File.experiment === f.experiment
+    && ecg1File.group === f.group
+    && ecg1File.channel === f.channel
+);
+const dyads = ecg1Files.map(ecg1File => {
+    const ecg2File = getEcg2File(ecg1File);
+    if(!ecg2File){
+        console.warn(`! no ecg 2 file found for ${ecg1File.file} [experiment, group, dyad AND channel IDs must match].`);
+        return null;
+    }
+    return {
+        ecg1: ecg1File,
+        ecg2: ecg2File
+    }
+});
+
+console.log(dyads);
