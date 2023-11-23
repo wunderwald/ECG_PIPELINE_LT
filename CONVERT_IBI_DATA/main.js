@@ -149,9 +149,21 @@ dyads.forEach(dyad => {
     const ibiEcg1 = dataEcg1.ibi.ms;
     const ibiEcg2 = dataEcg2.ibi.ms;
 
+    // get timing of first ibi (time of first non-excluded peak)
+    if(dataEcg1.startIndex !== 0 || dataEcg2.startIndex !== 0 || dataEcg1.removedRegions.length > 0 || dataEcg2.removedRegions.length > 0){
+        console.warn("! unprecise timing: script assumes that start index is 0 and that no regions are excluded.");
+    }
+    if(dataEcg1.endIndex < dataEcg1.ecg[dataEcg1.ecg.length-1].index || dataEcg2.endIndex < dataEcg2.ecg[dataEcg2.ecg.length-1].index){
+        console.warn("! excess data: script assumes that no data is excluded at the end of the recording");
+    }
+    const secondPeakIndexEcg1 = dataEcg1.peaksCropped[1];
+    const secondPeakTimeEcg1 = 1000 / dataEcg1.samplingRate * secondPeakIndexEcg1;
+    const secondPeakIndexEcg2 = dataEcg2.peaksCropped[1];
+    const secondPeakTimeEcg2 = 1000 / dataEcg2.samplingRate * secondPeakIndexEcg2;
+
     // make time-series of ibis
-    const makeIbiTimeSeries = ibiList => {
-        let accTime = 0;
+    const makeIbiTimeSeries = (ibiList, msOffset) => {
+        let accTime = msOffset || 0;
         const ts = [];
         ibiList.forEach(ibiSample => {
             ts.push({t: accTime, ibi: ibiSample});
@@ -159,8 +171,8 @@ dyads.forEach(dyad => {
         });
         return ts;
     };
-    const tsIbiEcg1 = makeIbiTimeSeries(ibiEcg1).map(o => ({...o, ecg: 'ecg1'}));
-    const tsIbiEcg2 = makeIbiTimeSeries(ibiEcg2).map(o => ({...o, ecg: 'ecg2'}));
+    const tsIbiEcg1 = makeIbiTimeSeries(ibiEcg1, secondPeakTimeEcg1).map(o => ({...o, ecg: 'ecg1'}));
+    const tsIbiEcg2 = makeIbiTimeSeries(ibiEcg2, secondPeakTimeEcg2).map(o => ({...o, ecg: 'ecg2'}));
 
     // merge bth time series
     const tsIbiCombined = [...tsIbiEcg1, ...tsIbiEcg2].sort((a, b) => a.t - b.t);
