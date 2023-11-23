@@ -1,7 +1,7 @@
 /* 
-by Moritz Wunderwald, 2023
-
 Matches dyads from an input dataset that has been exported from ibxx.at/ibi_v2, reads their ibis and writes them to a combined csv dataset.
+
+by Moritz Wunderwald, 2023
 */
 
 import * as fs from 'fs';
