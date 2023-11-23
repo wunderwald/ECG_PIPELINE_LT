@@ -102,6 +102,43 @@ const dyads = ecg1Files.map(ecg1File => {
         ecg1: ecg1File,
         ecg2: ecg2File
     }
-});
+}).filter(o => o);
 
-console.log(dyads);
+// extract IBI data for each dyad
+let i=0;
+dyads.forEach(dyad => {
+    if(i++ > 0) return;
+
+    // process dyad
+    const dyadId = dyad.ecg1.dyadId;
+    console.log(`# Processing dyad ${dyadId}...`);
+
+    // read data
+    const pathEcg1 = dyad.ecg1.path;
+    const pathEcg2 = dyad.ecg2.path;
+    const dataEcg1 = JSON.parse(fs.readFileSync(pathEcg1));
+    const dataEcg2 = JSON.parse(fs.readFileSync(pathEcg2));
+
+    // get IBIs in milliseconds
+    const ibiEcg1 = dataEcg1.ibi.ms;
+    const ibiEcg2 = dataEcg2.ibi.ms;
+
+    // make time-series of ibis
+    const makeIbiTimeSeries = ibiList => {
+        let accTime = 0;
+        const ts = [];
+        ibiList.forEach(ibiSample => {
+            ts.push({t: accTime, ibi: ibiSample});
+            accTime += ibiSample;
+        });
+        return ts;
+    };
+    const tsIbiEcg1 = makeIbiTimeSeries(ibiEcg1).map(o => ({...o, ecg: 'ecg1'}));
+    const tsIbiEcg2 = makeIbiTimeSeries(ibiEcg2).map(o => ({...o, ecg: 'ecg2'}));
+
+    // make combined timeseries
+    const tsIbiCombined = [...tsIbiEcg1, ...tsIbiEcg2].sort((a, b) => a.t - b.t);
+    console.log(tsIbiCombined);
+
+    // make csv
+});
