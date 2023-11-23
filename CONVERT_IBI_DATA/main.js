@@ -4,7 +4,7 @@ const INPUT_DIR = './dashboardOutputData';
 
 // filename components
 const EXPERIMENTS = ['lt_free_interaction'];
-const GROUPS = ['IL'];
+const GROUPS = ['IL', 'IC'];
 const ECG_LABELS = {
     ecg1: ['ECG1', 'EKG_1', 'ECG_1'],
     ecg2: ['ECG2', 'EKG_2', 'ECG_2']
@@ -60,5 +60,28 @@ const _inputFiles = fs.readdirSync(INPUT_DIR)
 
 // filter filenames (invalid syntax), throw warnings
 const inputFiles = [];
+_inputFiles.forEach(inputFile => {
+    if(!inputFile.experiment) {
+        console.warn(`! no valid experiment identifier found for ${inputFile.file}. Excluding file.`);
+        return;
+    }
+    if(!inputFile.ecgLabel) {
+        console.warn(`! no valid ECG identifier found for ${inputFile.file}. Excluding file.`);
+        return;
+    }
+    if(!inputFile.group) {
+        console.warn(`! no valid group identifier found for ${inputFile.file}. Excluding file.`);
+        return;
+    }
+    if(!inputFile.channel) {
+        console.warn(`! no valid channel identifier found for ${inputFile.file}. Excluding file.`);
+        return;
+    }
+    if(!inputFile.dyadId) {
+        console.warn(`! no valid dyad ID found for ${inputFile.file}. Excluding file.`);
+        return;
+    }
+    inputFiles.push(inputFile);
+})
 
 // make dyads
