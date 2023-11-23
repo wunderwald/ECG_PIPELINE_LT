@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 
+// i/0
 const INPUT_DIR = './dashboardOutputData';
+const OUTPUT_DIR = './dyadIbiData';
 
 // filename components
 const EXPERIMENTS = ['lt_free_interaction'];
@@ -138,7 +140,17 @@ dyads.forEach(dyad => {
 
     // make combined timeseries
     const tsIbiCombined = [...tsIbiEcg1, ...tsIbiEcg2].sort((a, b) => a.t - b.t);
-    console.log(tsIbiCombined);
 
-    // make csv
+    // make csv content
+    const head = "t_ms, ibi_ms, ecg";
+    const body = tsIbiCombined.reduce((txt, sample) => `${txt}${sample.t}, ${sample.ibi}, ${sample.ecg}\n`, "");
+    const csv = `${head}\n${body}`;
+    console.log(csv);
+
+    // make filename (experiment, group, channel)...
+    // TODO
+
+    // write csv to file
+    // TODO
+
 });
