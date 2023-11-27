@@ -6,6 +6,8 @@ by Moritz Wunderwald, 2023
 
 import * as fs from 'fs';
 
+const USE_MS_OFFSET = true;
+
 // i/0
 const INPUT_DIR = './dashboardOutputData';
 const OUTPUT_DIR = './individualIbiData';
@@ -145,7 +147,7 @@ inputFiles.forEach(inputFile => {
         });
         return ts;
     };
-    const tsIbi = makeIbiTimeSeries(ibi_ms, secondPeakTime).splice(0, ibi_ms.length-3);
+    const tsIbi = makeIbiTimeSeries(ibi_ms, USE_MS_OFFSET ? secondPeakTime : 0).splice(0, ibi_ms.length-3);
 
     // make csv content
     const head = "t_ms, ibi_ms";
