@@ -145,7 +145,7 @@ inputFiles.forEach(inputFile => {
         });
         return ts;
     };
-    const tsIbi = makeIbiTimeSeries(ibi_ms, secondPeakTime);
+    const tsIbi = makeIbiTimeSeries(ibi_ms, secondPeakTime).splice(0, ibi_ms.length-3);
 
     // make csv content
     const head = "t_ms, ibi_ms";
