@@ -148,7 +148,6 @@ inputFiles.forEach(inputFile => {
         return ts;
     };
     const tsIbi = makeIbiTimeSeries(ibi_ms, USE_MS_OFFSET ? secondPeakTime : 0)
-        .splice(0, ibi_ms.length-10)    // some negative error values at the end of some files
         .sort((a, b) => a.t - b.t);
 
     // make csv content

@@ -171,10 +171,8 @@ dyads.forEach(dyad => {
         return ts;
     };
     const tsIbiEcg1 = makeIbiTimeSeries(ibiEcg1, secondPeakTimeEcg1)
-        .splice(0, ibiEcg1.length-10)    // some negative error values at the end of some files
         .map(o => ({...o, ecg: 'ecg1'}));
     const tsIbiEcg2 = makeIbiTimeSeries(ibiEcg2, secondPeakTimeEcg2)
-        .splice(0, ibiEcg2.length-10) 
         .map(o => ({...o, ecg: 'ecg2'}));
 
     // merge bth time series
