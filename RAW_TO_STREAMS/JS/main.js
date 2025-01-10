@@ -27,7 +27,7 @@ const main = () => {
         .filter(file => file.endsWith('.csv') && !(file.includes("CRC") || file.includes("cardresp")))
         .forEach(file => fs.rmSync(`${outputDirStreams}/${file}`));
 
-    //convert csv files to artiifact/stream data (1 txt/csv file per stream / ecg channel)
+    //convert csv files to stream data (1 txt/csv file per stream / ecg channel)
     experiments.forEach(experiment => {
         const dir = `${inputDir}/${experiment}`;
 
