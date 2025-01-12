@@ -1,0 +1,1 @@
+cd ./JS && /usr/local/bin/node main_children.js
