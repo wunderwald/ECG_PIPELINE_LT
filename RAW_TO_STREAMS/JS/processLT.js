@@ -48,37 +48,51 @@ const ltSegments_adults = [
 //TODO fix these
 const ltSegments_children = [
     {
-        label: 'lt_madlibs',
+        label: 'lt_tangram_alone',
         start: '1_1',
-        end: '2_1',
+        end: 'End_1',
+        minDuration_ms: 0,
+        maxDuration_ms: Number.POSITIVE_INFINITY,
+    },
+    {
+        label: 'lt_tangram_together',
+        start: '2_1',
+        end: 'End_1',
+        minDuration_ms: 0,
+        maxDuration_ms: Number.POSITIVE_INFINITY,
+    },
+    {
+        label: 'lt_tangram_rest',
+        start: '3_1',
+        end: 'End_1',
         minDuration_ms: 0,
         maxDuration_ms: Number.POSITIVE_INFINITY,
     },
     {
         label: 'lt_video_a',
-        start: '3_1',
-        end: '4_1',
+        start: '4_1',
+        end: '5_1',
         minDuration_ms: 300000, // 5min
         maxDuration_ms: 600000, // 10 min
     },
     {
         label: 'lt_video_b',
-        start: '3_2',
-        end: '4_2',
+        start: '4_2',
+        end: '5_2',
         minDuration_ms: 300000, // 5min
         maxDuration_ms: 600000, // 10 min
     },
     {
         label: 'lt_free_interaction',
-        start: '5_1',
-        end: '6_1',
+        start: '6_1',
+        end: '7_1',
         minDuration_ms: 600000, // 10min
         maxDuration_ms: 1200000, // 20 min
     },
     {
         label: 'lt_castle_knights',
-        start: '7_1',
-        end: '8_1',
+        start: '8_1',
+        end: '9_1',
         minDuration_ms: 0,
         maxDuration_ms: Number.POSITIVE_INFINITY
     },
@@ -91,7 +105,7 @@ const checkChildSegments = segments => {
         rl.close();
     });
     if(markersAreDefault) return segments;
-    
+
 };
 
 module.exports = (ecgPaths, markerPaths, childData = false) => {
