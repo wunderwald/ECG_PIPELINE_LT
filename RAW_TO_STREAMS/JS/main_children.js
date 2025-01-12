@@ -17,7 +17,7 @@ const getSubject = path => {
 
 const main = () => {
 
-    const inputDir = '../recordings/csv';
+    const inputDir = '../recordings_child/csv';
     const outputDirStreams = '../streams';
 
     const experiments = ['lt'];
@@ -57,7 +57,7 @@ const main = () => {
 
         //use marker data and experiment name to crop / split streams and then write data to ../streams
         console.log("\n# Processing ECG data: ");
-        processEcgData(ecgPaths, markerPaths, experiment);
+        processEcgData(ecgPaths, markerPaths, experiment, true);
 
     });
     //create subject list stream data directory

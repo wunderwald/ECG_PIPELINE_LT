@@ -1,5 +1,12 @@
 const filterByMarkers = require('./filterByMarkers');
 
+// user input helper
+const readline = require('node:readline');
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+
 const ltSegments_adults = [
     {
         label: 'lt_madlibs',
@@ -77,22 +84,34 @@ const ltSegments_children = [
     },
 ];
 
-const testDurations = []
+const checkChildSegments = segments => {
+    let markersAreDefault = true;
+    rl.question(`# Do you need to set markers manually [y/n]`, reply => {
+        markersAreDefault = reply !== 'y';
+        rl.close();
+    });
+    if(markersAreDefault) return segments;
+    
+};
 
-module.exports = (ecgPaths, markerPaths) => ltSegments.forEach(segment => {
-    console.log(`\n## Processing lt [${segment.label}]`);
-    filterByMarkers(
-        ecgPaths,
-        markerPaths,
-        {
-            start: segment.start,
-            end: segment.end
-        },
-        segment.label,
-        true,
-        {
-            minDuration_ms: segment.minDuration_ms,
-            maxDuration_ms: segment.maxDuration_ms
-        }
-    );
-});
+module.exports = (ecgPaths, markerPaths, childData = false) => {
+    const segments = childData ? checkChildSegments(ltSegments_children) : ltSegments_adults;
+
+    segments.forEach(segment => {
+        console.log(`\n## Processing lt [${segment.label}]`);
+        filterByMarkers(
+            ecgPaths,
+            markerPaths,
+            {
+                start: segment.start,
+                end: segment.end
+            },
+            segment.label,
+            true,
+            {
+                minDuration_ms: segment.minDuration_ms,
+                maxDuration_ms: segment.maxDuration_ms
+            }
+        );
+    });
+};
