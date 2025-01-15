@@ -1,5 +1,4 @@
 const filterByMarkers = require('./filterByMarkers');
-const prompt = require('prompt-sync')();
 
 const ltSegments_adults = [
     {
