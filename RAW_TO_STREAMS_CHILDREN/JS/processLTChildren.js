@@ -77,13 +77,13 @@ const promptNumber = question => {
 const readManualSegments = () => {
     return ltSegments_children.map(segment => ({
         ...segment,
-        start_ms_manual: promptNumber(`Enter start time for ${segment.label} in ms: `),
-        end_ms_manual: promptNumber(`Enter end time for ${segment.label} in ms: `),
+        start_ms_manual: promptNumber(`\nEnter start time for ${segment.label} in ms: `),
+        end_ms_manual: promptNumber(`\nEnter end time for ${segment.label} in ms: `),
     }));
 }
 
 const getSegments = segments => {
-    const response = prompt('Do you want to use the default segments for children? (y/n) ');
+    const response = prompt('\nDo you want to use the default segments? (y/n) ');
     const markersAreDefault = response !== 'n' && response !== 'N';
     return markersAreDefault ? segments : readManualSegments();
 };
