@@ -1,4 +1,4 @@
-const filterByMarkers = require('./filterByMarkers');
+const cutByMarkers = require('./cutByMarkers');
 const prompt = require('prompt-sync')();
 
 const ltSegments_children = [
@@ -82,7 +82,7 @@ const readManualSegments = () => {
     }));
 }
 
-const getChildSegments = segments => {
+const getSegments = segments => {
     const response = prompt('Do you want to use the default segments for children? (y/n) ');
     const markersAreDefault = response !== 'n' && response !== 'N';
     return markersAreDefault ? segments : readManualSegments();
@@ -90,7 +90,8 @@ const getChildSegments = segments => {
 
 
 module.exports = (ecgPaths, markerPaths) => {
-    const segments = getChildSegments(ltSegments_children);
-
-    filterByMarkers(ecgPaths, markerPaths, segments);
+    // get list of segment data (either default or manual)
+    const segments = getSegments(ltSegments_children);
+    // use markers to cut and export ecg files into segments
+    cutByMarkers(ecgPaths, markerPaths, segments);
 };
