@@ -1,11 +1,5 @@
 const filterByMarkers = require('./filterByMarkers');
-
-// user input helper
-const readline = require('node:readline');
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
+const prompt = require('prompt-sync')();
 
 const ltSegments_adults = [
     {
@@ -137,18 +131,19 @@ const ltSegments_children = [
     },
 ];
 
-const checkChildSegments = segments => {
-    let markersAreDefault = true;
-    rl.question(`# Do you need to set markers manually [y/n]`, reply => {
-        markersAreDefault = reply !== 'y';
-        rl.close();
-    });
-    if(markersAreDefault) return segments;
+const readManualSegments = () => {
+    return ltSegments_children;
+}
 
+const getChildSegments = segments => {
+    const response = prompt('Do you want to use the default segments for children? (y/n) ');
+    const markersAreDefault = response === 'y' || response === 'Y';
+    return markersAreDefault ? segments : readManualSegments();
 };
 
+
 module.exports = (ecgPaths, markerPaths, childData = false) => {
-    const segments = childData ? checkChildSegments(ltSegments_children) : ltSegments_adults;
+    const segments = childData ? getChildSegments(ltSegments_children) : ltSegments_adults;
 
     segments.forEach(segment => {
         console.log(`\n## Processing lt [${segment.label}]`);
