@@ -48,9 +48,7 @@ module.exports = (ecgPaths, markerPaths, segments) => {
         }
 
         // read markers
-        const markers = makeMarkersUnique
-            ? markersToUniqueMarkers(readMarkerFile(markerPath))
-            : readMarkerFile(markerPath);
+        const markers = markersToUniqueMarkers(readMarkerFile(markerPath));
         if (!markers) {
             console.warn(`ERROR: Missing marker data. Most probably the marker stream is empty or doesn't exist. ${ecg.subject} will be ignored.`);
             return;
@@ -58,6 +56,8 @@ module.exports = (ecgPaths, markerPaths, segments) => {
 
         // process each segment
         segments.forEach(segment => {
+
+            console.log(`... ${segment.label}`);
 
             const useManualMarkers = segment.start_ms_manual && segment.end_ms_manual;
 
@@ -73,7 +73,7 @@ module.exports = (ecgPaths, markerPaths, segments) => {
                 };
 
             if (!timeRange.start || !timeRange.end) {
-                console.warn(`ERROR: Missing start/end marker(s). ${ecg.subject} will be ignored.`);
+                console.warn(`ERROR: Missing start/end marker(s). ${segment.label} will be skipped.`);
                 return;
             }
 
@@ -86,7 +86,7 @@ module.exports = (ecgPaths, markerPaths, segments) => {
             if (segment.maxDuration_ms || segment.minDuration_ms) {
                 const duration_ms = +timeRange.end.time - +timeRange.start.time;
                 if (duration_ms > segment.maxDuration_ms || duration_ms < segment.minDuration_ms) {
-                    console.warn(`! segment duration out of range: ${label} is ${duration_ms}ms, should be between ${segment.minDuration_ms}ms and ${segment.maxDuration_ms}ms.`);
+                    console.warn(`! segment duration out of range: ${segment.label} is ${duration_ms}ms, should be between ${segment.minDuration_ms}ms and ${segment.maxDuration_ms}ms.`);
                 }
             }
 
@@ -97,7 +97,7 @@ module.exports = (ecgPaths, markerPaths, segments) => {
                 end: indexOfClosestMatch(timeStream, +timeRange.end.time)
             };
             if (timeRangeIndices.start === -1 || timeRangeIndices.end === -1) {
-                console.warn(`ERROR: Matlab markers are out of range of ecg recording. ${ecg.subject} will be ignored.`);
+                console.warn(`ERROR: Matlab markers are out of range of ecg recording. ${segment.label} will be skipped.`);
                 return;
             };
 
@@ -108,12 +108,12 @@ module.exports = (ecgPaths, markerPaths, segments) => {
                     out[streamName] = stream.filter((val, i) => i >= timeRangeIndices.start && i < timeRangeIndices.end);
                     return out;
                 }, ({})),
-                name: `${label}_${ecg.name}`,
+                name: `${segment.label}_${ecg.name}, ${ecg.subject}`,
                 subject: ecg.subject,
             };
 
             // write processed data
-            writeStreamData(processed.name, processed.streams);
+            writeStreamData(processed.name, processed.streams, ecg.subject);
         });
     });
 
