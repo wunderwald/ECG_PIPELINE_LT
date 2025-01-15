@@ -1,4 +1,4 @@
-const cutByMarkers = require('./cutByMarkers');
+const cutSegments = require('./cutSegments');
 const prompt = require('prompt-sync')();
 
 const ltSegments_children = [
@@ -90,8 +90,11 @@ const getSegments = segments => {
 
 
 module.exports = (ecgPaths, markerPaths) => {
-    // get list of segment data (either default or manual)
-    const segments = getSegments(ltSegments_children);
-    // use markers to cut and export ecg files into segments
-    cutByMarkers(ecgPaths, markerPaths, segments);
+    ecgPaths.forEach(ecgPath => {
+        console.log(`\n### processing ${ecgPath}`);
+        // get list of segment data (either default or manual)
+        const segments = getSegments(ltSegments_children);
+        // use markers to cut and export ecg files into segments
+        cutSegments(ecgPath, markerPaths, segments);
+    });
 };
