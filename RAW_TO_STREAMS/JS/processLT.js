@@ -39,7 +39,6 @@ const ltSegments_adults = [
     },
 ];
 
-//TODO fix these
 const ltSegments_children = [
     {
         label: 'lt_tangram_alone_1',
@@ -160,6 +159,10 @@ module.exports = (ecgPaths, markerPaths, childData = false) => {
                 minDuration_ms: segment.minDuration_ms,
                 maxDuration_ms: segment.maxDuration_ms,
                 fixedDuration_ms: (segment.label === 'lt_free_interaction' && childData) ? 300000 : null // in child recordings, lt_free_interaction and videos are always 5min, independent of end marker
+            },
+            {
+                start_ms_manual: segment.start_ms_manual,
+                end_ms_manual: segment.end_ms_manual
             }
         );
     });
