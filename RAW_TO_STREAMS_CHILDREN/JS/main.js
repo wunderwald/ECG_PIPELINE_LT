@@ -4,7 +4,7 @@ const writeSubjectList = require('./writeSubjectList');
 
 const main = () => {
 
-    const inputDir = '../recordings_child/csv';
+    const inputDir = '../recordings/csv';
     const outputDirStreams = '../streams';
 
     const experiments = ['lt'];

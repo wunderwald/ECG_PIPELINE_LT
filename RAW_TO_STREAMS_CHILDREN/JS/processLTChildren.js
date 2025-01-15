@@ -110,11 +110,11 @@ module.exports = (ecgPaths, markerPaths) => {
             },
             segment.label,
             true,
-            // test durations
+            // test / fixed durations
             {
                 minDuration_ms: segment?.minDuration_ms,
                 maxDuration_ms: segment?.maxDuration_ms,
-                fixedDuration_ms: segment.label === 'lt_free_interaction' ? 300000 : null // in child recordings, lt_free_interaction and videos are always 5min, independent of end marker
+                fixedDuration_ms: segment?.fixedDuration_ms
             },
             // optional manual start end times
             {
