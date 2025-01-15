@@ -12,7 +12,7 @@ Matlab, node.js and python3 must be installed on your machine.
 
 ## Processing steps
 
-### RAW_TO_STREAMS - raw xdf data to csv streams
+### RAW_TO_STREAMS / RAW_TO_STREAMS_CHILDREN - raw xdf data to csv streams
 
 #### Step 1: Matlab
 
