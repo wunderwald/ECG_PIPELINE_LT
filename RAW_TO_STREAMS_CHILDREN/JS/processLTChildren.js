@@ -85,7 +85,7 @@ const readManualSegments = () => {
     return ltSegments_children.map(segment => ({
         ...segment,
         start_ms_manual: promptNumber(`Enter start time for ${segment.label} in ms: `),
-        start_ms_manual: promptNumber(`Enter end time for ${segment.label} in ms: `),
+        end_ms_manual: promptNumber(`Enter end time for ${segment.label} in ms: `),
     }));
 }
 
@@ -99,28 +99,30 @@ const getChildSegments = segments => {
 module.exports = (ecgPaths, markerPaths) => {
     const segments = getChildSegments(ltSegments_children);
 
-    segments.forEach(segment => {
-        console.log(`\n## Processing lt [${segment.label}]`);
-        filterByMarkers(
-            ecgPaths,
-            markerPaths,
-            {
-                start: segment.start,
-                end: segment.end
-            },
-            segment.label,
-            true,
-            // test / fixed durations
-            {
-                minDuration_ms: segment?.minDuration_ms,
-                maxDuration_ms: segment?.maxDuration_ms,
-                fixedDuration_ms: segment?.fixedDuration_ms
-            },
-            // optional manual start end times
-            {
-                start: segment.start_ms_manual,
-                end: segment.end_ms_manual
-            }
-        );
-    });
+    filterByMarkers(ecgPaths, markerPaths, segments);
+
+    // segments.forEach(segment => {
+    //     console.log(`\n## ${segment.label}`);
+    //     filterByMarkers(
+    //         ecgPaths,
+    //         markerPaths,
+    //         {
+    //             start: segment.start,
+    //             end: segment.end
+    //         },
+    //         segment.label,
+    //         true,
+    //         // test / fixed durations
+    //         {
+    //             minDuration_ms: segment?.minDuration_ms,
+    //             maxDuration_ms: segment?.maxDuration_ms,
+    //             fixedDuration_ms: segment?.fixedDuration_ms
+    //         },
+    //         // optional manual start end times
+    //         {
+    //             start: segment.start_ms_manual,
+    //             end: segment.end_ms_manual
+    //         }
+    //     );
+    // });
 };

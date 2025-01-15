@@ -1,6 +1,5 @@
 const fs = require('fs');
 const processEcgData = require('./processEcgData');
-const writeSubjectList = require('./writeSubjectList');
 
 const main = () => {
 
@@ -47,8 +46,6 @@ const main = () => {
         processEcgData(ecgPaths, markerPaths, experiment);
 
     });
-    //create subject list stream data directory
-    writeSubjectList(outputDirStreams);
 }
 
 main();
