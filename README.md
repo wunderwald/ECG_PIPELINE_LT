@@ -16,7 +16,7 @@ Matlab, node.js and python3 must be installed on your machine.
 
 #### Step 1: Matlab
 
-First, the xdf data is converted to csv files holding the exact same data using Matlab. The main script is ```/RAW_TO_STREAMS/main.m```, it uses a xdf converter that is stored in ```/RAW_TO_STREAMS/xdf_converter```.
+First, the xdf data is converted to csv files holding the exact same data using Matlab. The main script is ```/RAW_TO_STREAMS/main.m``` for adult data or ```/RAW_TO_STREAMS_CHILDREN/main.m``` for child data, it uses a xdf converter that is stored in ```/RAW_TO_STREAMS/xdf_converter``` and ```/RAW_TO_STREAMS_CHILDREN/xdf_converter```.
 
 ##### How to execute:
 
@@ -31,14 +31,14 @@ First, the xdf data is converted to csv files holding the exact same data using 
 
 #### Step 2: node.js
 
-Now, the csv files from the previous step are converted to more specific files. The input csv files have columns for two ecg signals, their impedances, time and markers/triggers. This part of the pipeline exctracts the ecg information, merges it with time data and applies markers in order to create individual ecg files for each segment of the original recording. The output data are individual csv files (streams) for each recording segment for both of the escg channels.
+Now, the csv files from the previous step are converted to more specific files. The input csv files have columns for two ecg signals, their impedances, time and markers/triggers. This part of the pipeline exctracts the ecg information, merges it with time data and applies markers in order to create individual ecg files for each segment of the original recording. The output data are individual csv files (streams) for each recording segment for both of the esg channels.
 
 ##### How to execute
 
-- switch to the directory ```/RAW_TO_STREAMS/JS``` in a terminal: ```cd RAW_TO_STREAMS/JS``` (assuming the terminal is opened in the base directory)
+- switch to the directory ```/RAW_TO_STREAMS/JS``` (or ```/RAW_TO_STREAMS_CHILDREN/JS```) in a terminal: ```cd RAW_TO_STREAMS/JS``` or ```cd RAW_TO_STREAMS_CHILDREN/JS``` (assuming the terminal is opened in the base directory)
 - install dependencies using ```npm install```
 - Now run the main script main.js using node.js: ```node main```
-- the output data is stored in ```/RAW_TO_STREAMS/streams```
+- the output data is stored in ```/RAW_TO_STREAMS/streams``` (or ```RAW_TO_STREAMS_CHILDREN/streams```)
 
 ### STREAMS_TO_IBI - detect peaks in stream data and calculate IBI
 
