@@ -78,15 +78,15 @@ module.exports = (ecgPaths, markerPaths, segments) => {
             }
 
             // apply fixed duration
-            if (testDurations && testDurations.fixedDuration_ms) {
-                timeRange.end.time = timeRange.start.time + testDurations.fixedDuration_ms;
+            if (segment.fixedDuration_ms) {
+                timeRange.end.time = timeRange.start.time + segment.fixedDuration_ms;
             }
 
             // test duration
-            if (testDurations) {
+            if (segment.maxDuration_ms || segment.minDuration_ms) {
                 const duration_ms = +timeRange.end.time - +timeRange.start.time;
-                if (duration_ms > testDurations.maxDuration_ms || duration_ms < testDurations.minDuration_ms) {
-                    console.warn(`! segment duration out of range: ${label} is ${duration_ms}ms, should be between ${testDurations.minDuration_ms}ms and ${testDurations.maxDuration_ms}ms.`);
+                if (duration_ms > segment.maxDuration_ms || duration_ms < segment.minDuration_ms) {
+                    console.warn(`! segment duration out of range: ${label} is ${duration_ms}ms, should be between ${segment.minDuration_ms}ms and ${segment.maxDuration_ms}ms.`);
                 }
             }
 
