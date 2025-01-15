@@ -82,14 +82,6 @@ module.exports = (ecgPaths, markerPaths, segments) => {
                 timeRange.end.time = timeRange.start.time + segment.fixedDuration_ms;
             }
 
-            // test duration
-            if (segment.maxDuration_ms || segment.minDuration_ms) {
-                const duration_ms = +timeRange.end.time - +timeRange.start.time;
-                if (duration_ms > segment.maxDuration_ms || duration_ms < segment.minDuration_ms) {
-                    console.warn(`! segment duration out of range: ${segment.label} is ${duration_ms}ms, should be between ${segment.minDuration_ms}ms and ${segment.maxDuration_ms}ms.`);
-                }
-            }
-
             //get index of markers in time stream
             const timeStream = ecg.streams.time.map(str => +str);
             const timeRangeIndices = {

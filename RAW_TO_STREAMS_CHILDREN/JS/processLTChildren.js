@@ -39,11 +39,6 @@ const ltSegments_children = [
         end: 'End_7',
     },
     {
-        label: 'lt_tangram_rest_4',
-        start: '3_4',
-        end: 'End_8',
-    },
-    {
         label: 'lt_video_a',
         start: '4_1',
         end: '5_1',
@@ -65,8 +60,6 @@ const ltSegments_children = [
         label: 'lt_castle_knights',
         start: '8_1',
         end: '9_1',
-        minDuration_ms: 0,
-        maxDuration_ms: Number.POSITIVE_INFINITY
     },
 ];
 
@@ -100,29 +93,4 @@ module.exports = (ecgPaths, markerPaths) => {
     const segments = getChildSegments(ltSegments_children);
 
     filterByMarkers(ecgPaths, markerPaths, segments);
-
-    // segments.forEach(segment => {
-    //     console.log(`\n## ${segment.label}`);
-    //     filterByMarkers(
-    //         ecgPaths,
-    //         markerPaths,
-    //         {
-    //             start: segment.start,
-    //             end: segment.end
-    //         },
-    //         segment.label,
-    //         true,
-    //         // test / fixed durations
-    //         {
-    //             minDuration_ms: segment?.minDuration_ms,
-    //             maxDuration_ms: segment?.maxDuration_ms,
-    //             fixedDuration_ms: segment?.fixedDuration_ms
-    //         },
-    //         // optional manual start end times
-    //         {
-    //             start: segment.start_ms_manual,
-    //             end: segment.end_ms_manual
-    //         }
-    //     );
-    // });
 };
