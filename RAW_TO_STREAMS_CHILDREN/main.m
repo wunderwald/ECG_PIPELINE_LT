@@ -1,4 +1,8 @@
 clear();
+
+% marker structuro for children or adults
+CHILDREN = true;
+
 % toggle processing steps
 XDF_TO_CSV = true;
 CSV_TO_STREAMS = false;
@@ -24,7 +28,11 @@ end
 
 % Step 2: convert csv to stream txt and csv files using node.js
 if CSV_TO_STREAMS
-    system("node ./csvToStreams.sh", '-echo');
+    if CHILDREN
+        system("node ./csvToStreamsChildren.sh", '-echo');
+    else
+        system("node ./csvToStreams.sh", '-echo');
+    end
 end
 
 % Step 3: create graphics for each recording

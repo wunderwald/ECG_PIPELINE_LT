@@ -28,7 +28,7 @@ const makrkersToUniqueMarkers = markers => {
     return uniqueMarkers;
 };
 
-module.exports = (ecgPaths, markerPaths, markerLabels, label, makeMarkersUnique, testDurations) => {
+module.exports = (ecgPaths, markerPaths, markerLabels, label, makeMarkersUnique, testDurations, manualMarkers) => {
 
     processedEcgData = [];
 
@@ -61,13 +61,18 @@ module.exports = (ecgPaths, markerPaths, markerLabels, label, makeMarkersUnique,
 
         // get time of start and end marker
         const timeRange = {
-            start: markers.find(m => m.marker.toLowerCase() === markerLabels.start.toLowerCase()),
-            end: markers.find(m => m.marker.toLowerCase() === markerLabels.end.toLowerCase())
+            start: manualMarkers ? { time: manualMarkers.start } : markers.find(m => m.marker.toLowerCase() === markerLabels.start.toLowerCase()),
+            end: manualMarkers ? { time: manualMarkers.end } : markers.find(m => m.marker.toLowerCase() === markerLabels.end.toLowerCase())
         };
 
         if(!timeRange.start || !timeRange.end) {
             console.warn(`ERROR: Missing start/end marker(s). ${ecg.subject} will be ignored.`);
             return;
+        }
+
+        // apply fixed duration
+        if(testDurations && testDurations.fixedDuration_ms){
+            timeRange.end.time = timeRange.start.time + testDurations.fixedDuration_ms;
         }
 
         // test duration
