@@ -1,4 +1,4 @@
-const processLT = require('./processLTChildren');
+const processLTChildren = require('./processLTChildren');
 
 const process = {
     lt: processLTChildren

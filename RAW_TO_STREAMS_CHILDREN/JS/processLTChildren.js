@@ -75,8 +75,8 @@ const promptNumber = question => {
     let valid = false;
     while(!valid) {
         response = +(prompt(question));
-        valid = !isNaN(response) && response >= 0;
-        if(!valid) console.log('Please enter a valid number.');
+        valid = response && !isNaN(response) && response >= 0;
+        if(!valid) console.log('Please enter a valid number. [number > 0]');
     }
     return response
 }
@@ -96,8 +96,8 @@ const getChildSegments = segments => {
 };
 
 
-module.exports = (ecgPaths, markerPaths, childData = false) => {
-    const segments = childData ? getChildSegments(ltSegments_children) : ltSegments_adults;
+module.exports = (ecgPaths, markerPaths) => {
+    const segments = getChildSegments(ltSegments_children);
 
     segments.forEach(segment => {
         console.log(`\n## Processing lt [${segment.label}]`);
@@ -110,10 +110,11 @@ module.exports = (ecgPaths, markerPaths, childData = false) => {
             },
             segment.label,
             true,
+            // test durations
             {
-                minDuration_ms: segment.minDuration_ms,
-                maxDuration_ms: segment.maxDuration_ms,
-                fixedDuration_ms: (segment.label === 'lt_free_interaction' && childData) ? 300000 : null // in child recordings, lt_free_interaction and videos are always 5min, independent of end marker
+                minDuration_ms: segment?.minDuration_ms,
+                maxDuration_ms: segment?.maxDuration_ms,
+                fixedDuration_ms: segment.label === 'lt_free_interaction' ? 300000 : null // in child recordings, lt_free_interaction and videos are always 5min, independent of end marker
             },
             // optional manual start end times
             {
