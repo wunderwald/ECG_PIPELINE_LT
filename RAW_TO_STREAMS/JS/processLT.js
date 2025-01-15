@@ -108,22 +108,25 @@ const ltSegments_children = [
         label: 'lt_video_a',
         start: '4_1',
         end: '5_1',
-        minDuration_ms: 300000, // 5min
-        maxDuration_ms: 600000, // 10 min
+        minDuration_ms: 0,
+        maxDuration_ms: Number.POSITIVE_INFINITY,
+        fixedDuration_ms: 300000 // 5min    
     },
     {
         label: 'lt_video_b',
         start: '4_2',
         end: '5_2',
-        minDuration_ms: 300000, // 5min
-        maxDuration_ms: 600000, // 10 min
+        minDuration_ms: 0,
+        maxDuration_ms: Number.POSITIVE_INFINITY,
+        fixedDuration_ms: 300000 // 5min    
     },
     {
         label: 'lt_free_interaction',
         start: '6_1',
         end: '7_1',
-        minDuration_ms: 600000, // 10min
-        maxDuration_ms: 1200000, // 20 min
+        minDuration_ms: 0,
+        maxDuration_ms: Number.POSITIVE_INFINITY,
+        fixedDuration_ms: 300000 // 5min    
     },
     {
         label: 'lt_castle_knights',
@@ -160,7 +163,8 @@ module.exports = (ecgPaths, markerPaths, childData = false) => {
             true,
             {
                 minDuration_ms: segment.minDuration_ms,
-                maxDuration_ms: segment.maxDuration_ms
+                maxDuration_ms: segment.maxDuration_ms,
+                fixedDuration_ms: (segment.label === 'lt_free_interaction' && childData) ? 300000 : null // in child recordings, lt_free_interaction and videos are always 5min, independent of end marker
             }
         );
     });

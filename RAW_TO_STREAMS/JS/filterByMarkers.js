@@ -68,6 +68,11 @@ module.exports = (ecgPaths, markerPaths, markerLabels, label, makeMarkersUnique,
             return;
         }
 
+        // apply fixed duration
+        if(testDurations && testDurations.fixedDuration_ms){
+            timeRange.end.time = timeRange.start.time + testDurations.fixedDuration_ms;
+        }
+
         // test duration
         if(testDurations){
             const duration_ms = +timeRange.end.time - +timeRange.start.time;
