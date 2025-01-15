@@ -1,5 +1,5 @@
 clear();
-
+% toggle processing steps
 XDF_TO_CSV = true;
 CSV_TO_STREAMS = false;
 CREATE_GRAPHICS = false;
@@ -24,7 +24,7 @@ end
 
 % Step 2: convert csv to stream txt and csv files using node.js
 if CSV_TO_STREAMS
-    system("./csvToStreams.sh", '-echo');
+    system("node ./csvToStreams.sh", '-echo');
 end
 
 % Step 3: create graphics for each recording

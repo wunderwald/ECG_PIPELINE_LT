@@ -58,11 +58,13 @@ module.exports = (ecgPaths, markerPaths, markerLabels, label, makeMarkersUnique,
             return;
         }
 
+
         // get time of start and end marker
         const timeRange = {
             start: markers.find(m => m.marker.toLowerCase() === markerLabels.start.toLowerCase()),
             end: markers.find(m => m.marker.toLowerCase() === markerLabels.end.toLowerCase())
         };
+
         if(!timeRange.start || !timeRange.end) {
             console.warn(`ERROR: Missing start/end marker(s). ${ecg.subject} will be ignored.`);
             return;
