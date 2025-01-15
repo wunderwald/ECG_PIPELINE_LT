@@ -1,6 +1,6 @@
 const filterByMarkers = require('./filterByMarkers');
 
-const ltSegments = [
+const ltSegments_adults = [
     {
         label: 'lt_madlibs',
         start: '1_1',
@@ -38,22 +38,24 @@ const ltSegments = [
     },
 ];
 
-const testDurations = []
+module.exports = (ecgPaths, markerPaths) => {
+    const segments = ltSegments_adults;
 
-module.exports = (ecgPaths, markerPaths) => ltSegments.forEach(segment => {
-    console.log(`\n## Processing lt [${segment.label}]`);
-    filterByMarkers(
-        ecgPaths,
-        markerPaths,
-        {
-            start: segment.start,
-            end: segment.end
-        },
-        segment.label,
-        true,
-        {
-            minDuration_ms: segment.minDuration_ms,
-            maxDuration_ms: segment.maxDuration_ms
-        }
-    );
-});
+    segments.forEach(segment => {
+        console.log(`\n## Processing lt [${segment.label}]`);
+        filterByMarkers(
+            ecgPaths,
+            markerPaths,
+            {
+                start: segment.start,
+                end: segment.end
+            },
+            segment.label,
+            true,
+            {
+                minDuration_ms: segment.minDuration_ms,
+                maxDuration_ms: segment.maxDuration_ms,
+            },
+        );
+    });
+};

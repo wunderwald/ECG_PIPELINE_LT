@@ -1,19 +1,5 @@
 const fs = require('fs');
 const processEcgData = require('./processEcgData');
-const writeSubjectList = require('./writeSubjectList');
-
-const makeOutputFileName = path => {
-    const parts = path.split("/");
-    const subject = parts[parts.length - 2];
-    const ecgNumber = parts[parts.length - 1];
-    return `${subject}_${ecgNumber}`;
-}
-
-const getSubject = path => {
-    const parts = path.split("/");
-    const subject = parts[parts.length - 2];
-    return subject;
-}
 
 const main = () => {
 
@@ -60,8 +46,6 @@ const main = () => {
         processEcgData(ecgPaths, markerPaths, experiment);
 
     });
-    //create subject list stream data directory
-    writeSubjectList(outputDirStreams);
 }
 
 main();
