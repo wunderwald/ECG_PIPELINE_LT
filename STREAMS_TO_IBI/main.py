@@ -1,9 +1,7 @@
 from processIBIs import processIBIs
 import os
-import accessQualityRatings as qr
 
-CREATE_FIGURES = True
-USE_RATINGS = False
+CREATE_FIGURES = False
 
 samplingRateDefault = 500
 samplingRateLabchart = 1000
@@ -49,14 +47,6 @@ for f in ecgFiles:
     
     # rating might include flip annotation
     flipSignal = False
-
-    if(USE_RATINGS):
-        # ignore files with quality ratings other than "best"
-        rating = qr.getRating(filename=filename)
-        if(rating is None or not "best" in rating):
-            print("Insufficient quality rating")
-            continue
-        flipSignal = "flip" in rating
 
     processIBIs(
         ecgPath=ecgPath,
