@@ -1,0 +1,19 @@
+{
+    "name": "spline",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node main",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "curve-interpolator": "^2.0.8",
+        "fs": "0.0.1-security",
+        "nodeplotlib": "^1.0.1",
+        "reflect-metadata": "^0.1.13"
+    }
+}
