@@ -10,3 +10,4 @@
 *.tsv
 *.xlsx
 !*package.json
+**/node_modules/**
