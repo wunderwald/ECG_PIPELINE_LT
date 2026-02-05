@@ -13,7 +13,7 @@ const writeIbi = require('./writeIbi');
 const writeInterpolatedIndices = require('./writeInterpolatedIndices');
 const writeKeyValue = require('./writeKeyValue');
 
-const inputDir = '../dashboardOutput_brokenDyads';
+const inputDir = '../dashboardOutputData';
 const outputDir = './out';
 
 // make or clear output directory
