@@ -76,7 +76,7 @@ module.exports = (ecgPath, markerPaths, segments) => {
 
         // apply fixed duration
         if (segment.fixedDuration_ms) {
-            timeRange.end.time = timeRange.start.time + segment.fixedDuration_ms;
+            timeRange.end.time = `${+timeRange.start.time + segment.fixedDuration_ms / 1000}`;
         }
 
         //get index of markers in time stream
