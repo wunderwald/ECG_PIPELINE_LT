@@ -1,14 +1,10 @@
-# Data processing pipeline for ECG data from the LT task
+# Data processing pipeline for ECG data from the Laughing Together (LT) task
 
-by [Moritz Wunderwald](mailto:code@moritzwunderwald.de), 2023
+by [Moritz Wunderwald](mailto:code@moritzwunderwald.de), 2023-2026
 
 ## About
 
 This data processing pipeline converts ecg data recorded to xdf format using smarting software or labrecorder to verified ibi data in csv format by using a combination of automated and manual processing and validation steps.
-
-## Prerequisites
-
-Matlab, node.js and python3 must be installed on your machine.
 
 ## Processing steps
 
